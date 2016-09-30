@@ -1,5 +1,7 @@
 package com.aesean.math.triangle;
 
+import java.lang.*;
+
 /**
  * Line
  *
@@ -18,21 +20,21 @@ public class Line {
     private static final int TYPE_X = 2;
 
     private int type;
-    private float x;
-    private float k;
-    private float b;
+    private double x;
+    private double k;
+    private double b;
 
-    private float maxX;
-    private float maxY;
-    private float minX;
-    private float minY;
+    private double maxX;
+    private double maxY;
+    private double minX;
+    private double minY;
 
-    public Line(float x) {
+    public Line(double x) {
         this.x = x;
         type = TYPE_X;
     }
 
-    public Line(float k, float b) {
+    public Line(double k, double b) {
         this.k = k;
         this.b = b;
         type = TYPE_K_B;
@@ -59,11 +61,15 @@ public class Line {
         if (point0.getX() == point1.getX() && point2.getX() == point1.getX()) {
             return true;
         }
-
-        float k01 = (point1.getY() - point0.getY()) / (point1.getX() - point0.getX());
-        float k12 = (point1.getY() - point2.getY()) / (point1.getX() - point2.getX());
-        return k01 == k12;
+        double k01 = (point1.getY() - point0.getY()) / (point1.getX() - point0.getX());
+        double k12 = (point1.getY() - point2.getY()) / (point1.getX() - point2.getX());
+//        return k01 == k12;
+        // 这里加一个容错，主要是因为精度问题，导致明明是一条线，但是k差了0.000001之类的，导致判断出错。
+        // 注意这个容错可能会引起过滤掉正确数值
+        return java.lang.Math.abs(k01 - k12) < DIFF;
     }
+
+    private static final float DIFF = 0.001f;
 
     /**
      * 求交点
@@ -105,8 +111,8 @@ public class Line {
 //                        return null;
 //                    }
                     if (this.k != line.k) {
-                        float x = (this.b - line.b) / (line.k - this.k);
-                        float y = this.k * x + this.b;
+                        double x = (this.b - line.b) / (line.k - this.k);
+                        double y = this.k * x + this.b;
 
                         Point point = new Point(x, y);
                         // 交点必须在线段的范围内
@@ -126,38 +132,38 @@ public class Line {
         return lineA == null ? null : lineA.getIntersection(lineB);
     }
 
-    public float getMaxX() {
+    public double getMaxX() {
         return maxX;
     }
 
-    public Line setMaxX(float maxX) {
+    public Line setMaxX(double maxX) {
         this.maxX = maxX;
         return this;
     }
 
-    public float getMaxY() {
+    public double getMaxY() {
         return maxY;
     }
 
-    public Line setMaxY(float maxY) {
+    public Line setMaxY(double maxY) {
         this.maxY = maxY;
         return this;
     }
 
-    public float getMinX() {
+    public double getMinX() {
         return minX;
     }
 
-    public Line setMinX(float minX) {
+    public Line setMinX(double minX) {
         this.minX = minX;
         return this;
     }
 
-    public float getMinY() {
+    public double getMinY() {
         return minY;
     }
 
-    public Line setMinY(float minY) {
+    public Line setMinY(double minY) {
         this.minY = minY;
         return this;
     }
