@@ -67,3 +67,5 @@ Point{name='k', x=17.142857142857142, y=34.285714285714285}
 [g, h, i]
 [i, j, k]
 </code></pre>
+## 集成Andorid效果图
+<img src="https://github.com/aesean/TriangleCount/blob/master/pic_0.png" alt="GitHub" title="集成Android效果图"/>
